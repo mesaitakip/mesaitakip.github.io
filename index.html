@@ -26,7 +26,7 @@
           var savedTheme = localStorage.getItem('theme');
           var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
           var theme = savedTheme || (prefersDark ? 'dark' : 'light');
-          
+
           if (theme === 'dark') {
             document.documentElement.classList.add('dark');
             document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000');
@@ -45,16 +45,43 @@
       html { background-color: #f3f4f6; }
       html.dark { background-color: #000000; }
       @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
-      
-      /* Botlar için açıklama stili - Kullanıcıdan tamamen gizle ama DOM'da bırak */
-      .app-info-bot {
-        position: absolute;
-        left: -10000px;
-        top: auto;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
+
+      /* Uygulama açıklaması - artık GÖRÜNÜR, kullanıcıya da bot'a da aynı içerik gösterilir */
+      .app-info {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 24px 20px 8px;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        color: #1f2937;
       }
+      html.dark .app-info { color: #e5e7eb; }
+      .app-info h1 {
+        font-size: 1.25rem;
+        margin: 0 0 8px;
+      }
+      .app-info p {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0 0 12px;
+      }
+      .app-info ul {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin: 0 0 12px;
+        padding-left: 20px;
+      }
+      .app-info a {
+        color: #3B82F6;
+        text-decoration: underline;
+      }
+      .app-info-footer {
+        font-size: 0.8rem;
+        opacity: 0.8;
+      }
+
+      /* React yüklendikten sonra bu bloğu otomatik gizlemek istersen
+         (örn. App.tsx içinde document.querySelector('.app-info')?.remove())
+         opsiyonel — şimdilik DAİMA görünür kalır. */
     </style>
     <script type="module" crossorigin src="/assets/index-2nFN0TUU.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
@@ -64,35 +91,30 @@
     <link rel="stylesheet" crossorigin href="/assets/index-lxpYLJEk.css">
   </head>
   <body>
-    <div id="root">
-      <!-- Google Botları için Uygulama Açıklaması -->
-      <!-- Bu içerik React yüklendiğinde otomatik olarak temizlenecektir -->
-      <section class="app-info-bot">
-        <h1>Mesai Takip Uygulaması Hakkında</h1>
-        <p>
-          Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır. 
-          Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir 
-          ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
-        </p>
-        <h2>Temel Özellikler:</h2>
-        <ul>
-          <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
-          <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
-          <li><strong>Bulut Yedekleme:</strong> Google Drive entegrasyonu ile verilerinizi cihazlar arasında güvenle senkronize etme.</li>
-          <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
-          <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
-        </ul>
-        <p>
-          <a href="/privacy.html">Gizlilik Politikası</a> | 
-          <a href="/terms.html">Kullanım Şartları</a>
-          <br>
-          İletişim: kndmrefe@gmail.com
-        </p>
-      </section>
-    </div>
-    
+    <!-- Google ve gerçek kullanıcılar için: uygulamanın amacını açıklayan görünür bölüm -->
+    <header class="app-info">
+      <h1>Mesai Takip Uygulaması Hakkında</h1>
+      <p>
+        Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
+        Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
+        ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
+      </p>
+      <ul>
+        <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
+        <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
+        <li><strong>Bulut Yedekleme:</strong> Google Drive entegrasyonu ile verilerinizi cihazlar arasında güvenle senkronize etme.</li>
+        <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
+        <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
+      </ul>
+      <p class="app-info-footer">
+        <a href="/privacy.html">Gizlilik Politikası</a> |
+        <a href="/terms.html">Kullanım Şartları</a>
+        <br>
+        İletişim: kndmrefe@gmail.com
+      </p>
+    </header>
+
+    <div id="root"></div>
+
   </body>
 </html>
-
-
-
