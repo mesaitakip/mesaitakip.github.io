@@ -46,42 +46,41 @@
       html.dark { background-color: #000000; }
       @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
 
-      /* Uygulama açıklaması - artık GÖRÜNÜR, kullanıcıya da bot'a da aynı içerik gösterilir */
-      .app-info {
+      /* Uygulama açıklaması - sayfanın en altında, gerçekten DOM'da ve görünür,
+         ama küçük/sade tutulduğu için kullanıcı deneyimini bozmaz. */
+      .app-info-footer {
         max-width: 720px;
         margin: 0 auto;
-        padding: 24px 20px 8px;
+        padding: 32px 20px calc(24px + var(--safe-area-inset-bottom));
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        color: #1f2937;
+        color: #6b7280;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        border-top: 1px solid #e5e7eb;
       }
-      html.dark .app-info { color: #e5e7eb; }
-      .app-info h1 {
-        font-size: 1.25rem;
+      html.dark .app-info-footer {
+        color: #9ca3af;
+        border-top-color: #1f2937;
+      }
+      .app-info-footer h2 {
+        font-size: 0.85rem;
+        color: #374151;
         margin: 0 0 8px;
       }
-      .app-info p {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin: 0 0 12px;
+      html.dark .app-info-footer h2 {
+        color: #d1d5db;
       }
-      .app-info ul {
-        font-size: 0.875rem;
-        line-height: 1.5;
-        margin: 0 0 12px;
-        padding-left: 20px;
+      .app-info-footer p {
+        margin: 0 0 10px;
       }
-      .app-info a {
+      .app-info-footer ul {
+        margin: 0 0 10px;
+        padding-left: 18px;
+      }
+      .app-info-footer a {
         color: #3B82F6;
         text-decoration: underline;
       }
-      .app-info-footer {
-        font-size: 0.8rem;
-        opacity: 0.8;
-      }
-
-      /* React yüklendikten sonra bu bloğu otomatik gizlemek istersen
-         (örn. App.tsx içinde document.querySelector('.app-info')?.remove())
-         opsiyonel — şimdilik DAİMA görünür kalır. */
     </style>
     <script type="module" crossorigin src="/assets/index-2nFN0TUU.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
@@ -91,9 +90,11 @@
     <link rel="stylesheet" crossorigin href="/assets/index-lxpYLJEk.css">
   </head>
   <body>
-    <!-- Google ve gerçek kullanıcılar için: uygulamanın amacını açıklayan görünür bölüm -->
-    <header class="app-info">
-      <h1>Mesai Takip Uygulaması Hakkında</h1>
+    <div id="root"></div>
+
+    <!-- Google ve kullanıcılar için: uygulamanın amacını açıklayan görünür footer -->
+    <footer class="app-info-footer">
+      <h2>Mesai Takip Uygulaması Hakkında</h2>
       <p>
         Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
         Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
@@ -106,15 +107,13 @@
         <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
         <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
       </ul>
-      <p class="app-info-footer">
+      <p>
         <a href="/privacy.html">Gizlilik Politikası</a> |
         <a href="/terms.html">Kullanım Şartları</a>
         <br>
         İletişim: kndmrefe@gmail.com
       </p>
-    </header>
-
-    <div id="root"></div>
+    </footer>
 
   </body>
 </html>
