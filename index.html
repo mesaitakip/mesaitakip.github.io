@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Android için özel meta etiketleri -->
+    <meta name="android-app-capable" content="yes" />
+    <meta name="android-statusbar-color" content="#3B82F6" />
+
+    <meta name="description" content="Mesai Takip - Fazla mesai saatlerinizi, izinlerinizi ve maaşınızı kolayca takip edin. Verilerinizi Google Drive ile güvenle yedekleyin." />
+    <title>Mesai Takip</title>
+
+    <!-- Dark Mode Initial State Script -->
+    <script>
+      (function() {
+        try {
+          var savedTheme = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = savedTheme || (prefersDark ? 'dark' : 'light');
+          
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000');
+            document.querySelector('meta[name="color-scheme"]').setAttribute('content', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#3B82F6');
+            document.querySelector('meta[name="color-scheme"]').setAttribute('content', 'light');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <style>
+      :root { --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px); }
+      html { background-color: #f3f4f6; }
+      html.dark { background-color: #000000; }
+      @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
+      
+      /* Botlar için açıklama stili - Kullanıcıdan tamamen gizle ama DOM'da bırak */
+      .app-info-bot {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-CqqAxdeP.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
+    <link rel="modulepreload" crossorigin href="/assets/preload-helper-zJ_50EbN.js">
+    <link rel="modulepreload" crossorigin href="/assets/dist-BBuC9Xni.js">
+    <link rel="modulepreload" crossorigin href="/assets/storageUtils-CKelRENY.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-MnYFl-UB.css">
+  </head>
+  <body>
+    <div id="root">
+      <!-- Google Botları için Uygulama Açıklaması -->
+      <!-- Bu içerik React yüklendiğinde otomatik olarak temizlenecektir -->
+      <section class="app-info-bot">
+        <h1>Mesai Takip Uygulaması Hakkında</h1>
+        <p>
+          Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır. 
+          Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir 
+          ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
+        </p>
+        <h2>Temel Özellikler:</h2>
+        <ul>
+          <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
+          <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
+          <li><strong>Bulut Yedekleme:</strong> Google Drive entegrasyonu ile verilerinizi cihazlar arasında güvenle senkronize etme.</li>
+          <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
+          <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
+        </ul>
+        <p>
+          <a href="/mesaitakip/privacy.html">Gizlilik Politikası</a> | 
+          <a href="/mesaitakip/terms.html">Kullanım Şartları</a>
+          <br>
+          İletişim: kndmrefe@gmail.com
+        </p>
+      </section>
+    </div>
+    
+  </body>
+</html>
