@@ -26,7 +26,7 @@
           var savedTheme = localStorage.getItem('theme');
           var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
           var theme = savedTheme || (prefersDark ? 'dark' : 'light');
-          
+
           if (theme === 'dark') {
             document.documentElement.classList.add('dark');
             document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000');
@@ -46,46 +46,99 @@
       html.dark { background-color: #000000; }
       @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
 
-      /* Uygulama açıklaması - React yüklenene kadar görünür, sonra otomatik kaldırılır */
-      .app-info {
-        max-width: 640px;
-        margin: 0 auto;
-        padding: 48px 24px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        color: #1f2937;
-        line-height: 1.6;
+      /* Açılır/kapanır bilgi şeridi - position: relative ile normal akışta,
+         #root'tan ÖNCE gelir ve React'in height/overflow ayarlarından
+         etkilenmez çünkü kendi bağımsız bloğu, #root'un dışındadır. */
+      .app-info-strip {
+        position: relative;
+        z-index: 9999;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        font-size: 0.8rem;
+        background: #eff6ff;
+        border-bottom: 1px solid #dbeafe;
+        color: #1e3a8a;
+        flex-shrink: 0;
       }
-      html.dark .app-info { color: #e5e7eb; }
-      .app-info h1 { font-size: 1.5rem; margin-bottom: 0.75rem; }
-      .app-info h2 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-      .app-info p { margin-bottom: 1rem; }
-      .app-info ul { padding-left: 1.25rem; margin-bottom: 1rem; }
-      .app-info li { margin-bottom: 0.4rem; }
-      .app-info a { color: #3B82F6; text-decoration: underline; }
-      .app-info .app-info-loading {
-        margin-top: 1.5rem;
-        font-size: 0.9rem;
-        color: #6b7280;
+      html.dark .app-info-strip {
+        background: #0f172a;
+        border-bottom-color: #1e293b;
+        color: #93c5fd;
+      }
+      .app-info-strip summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 6px 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+                user-select: none;
+      }
+      .app-info-strip summary::-webkit-details-marker { display: none; }
+      .app-info-strip summary::before {
+        content: "▸";
+        display: inline-block;
+        transition: transform 0.15s ease;
+        font-size: 0.7rem;
+      }
+      .app-info-strip[open] summary::before {
+        transform: rotate(90deg);
+      }
+      .app-info-strip-body {
+        padding: 0 16px 14px;
+        max-width: 720px;
+        line-height: 1.5;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      .app-info-strip-body p {
+        margin: 0 0 10px;
+      }
+      .app-info-strip-body ul {
+        margin: 0 0 10px;
+        padding-left: 18px;
+      }
+      .app-info-strip-body a {
+        color: inherit;
+        text-decoration: underline;
+      }
+
+      /* body'yi flex column yapıyoruz: şerit üstte sabit yer kaplar,
+         #root kalan alanı doldurur. Böylece React'in kendi iç
+         height:100vh ayarları bu şeridi asla ezemez/gizleyemez. */
+      html, body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      #root {
+        flex: 1 1 auto;
+        min-height: 0;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-2nFN0TUU.js"></script>
+    <script type="module" crossorigin src="/assets/index-C-y7Vi2q.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
     <link rel="modulepreload" crossorigin href="/assets/preload-helper-zJ_50EbN.js">
     <link rel="modulepreload" crossorigin href="/assets/dist-BBuC9Xni.js">
     <link rel="modulepreload" crossorigin href="/assets/storageUtils-CKelRENY.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-lxpYLJEk.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-kFbx1P5V.css">
   </head>
   <body>
-    <div id="root">
-      <!-- Uygulama açıklaması: React yüklenene kadar görünür kalır, ardından kaldırılır -->
-      <section class="app-info">
-        <h1>Mesai Takip Uygulaması Hakkında</h1>
+    <!-- Google ve kullanıcılar için: her zaman görünür, açılır/kapanır bilgi şeridi.
+         #root'un dışında ve ÜSTÜNDE; React'in layout'undan bağımsızdır. -->
+    <details class="app-info-strip">
+      <summary>Mesai Takip nedir?</summary>
+      <div class="app-info-strip-body">
         <p>
           Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
           Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
           ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
         </p>
-        <h2>Temel Özellikler:</h2>
         <ul>
           <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
           <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
@@ -99,9 +152,10 @@
           <br>
           İletişim: kndmrefe@gmail.com
         </p>
-        <p class="app-info-loading">Uygulama yükleniyor…</p>
-      </section>
-    </div>
+      </div>
+    </details>
+
+    <div id="root"></div>
 
   </body>
 </html>
