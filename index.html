@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="tr">
   <head>
@@ -46,74 +47,94 @@
       html.dark { background-color: #000000; }
       @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
 
-      /* Uygulama açıklaması - sayfanın en altında, gerçekten DOM'da ve görünür,
-         ama küçük/sade tutulduğu için kullanıcı deneyimini bozmaz. */
-      .app-info-footer {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 32px 20px calc(24px + var(--safe-area-inset-bottom));
+      /* Açılır/kapanır bilgi şeridi - native <details>/<summary> kullanır,
+         JS gerekmez, her zaman DOM'da ve gerçekten görünür/erişilebilirdir.
+         #root'un ALTINA yerleştirildi, kullanıcı uygulamayı kullanırken görmez. */
+      .app-info-strip {
         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        color: #6b7280;
         font-size: 0.8rem;
+        background: #eff6ff;
+        border-top: 1px solid #dbeafe;
+        color: #1e3a8a;
+      }
+      html.dark .app-info-strip {
+        background: #0f172a;
+        border-top-color: #1e293b;
+        color: #93c5fd;
+      }
+      .app-info-strip summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        -webkit-user-select: none;
+           -moz-user-select: none;
+                user-select: none;
+      }
+      .app-info-strip summary::-webkit-details-marker { display: none; }
+      .app-info-strip summary::before {
+        content: "▸";
+        display: inline-block;
+        transition: transform 0.15s ease;
+        font-size: 0.7rem;
+      }
+      .app-info-strip[open] summary::before {
+        transform: rotate(90deg);
+      }
+      .app-info-strip-body {
+        padding: 0 16px calc(16px + var(--safe-area-inset-bottom));
+        max-width: 720px;
         line-height: 1.5;
-        border-top: 1px solid #e5e7eb;
       }
-      html.dark .app-info-footer {
-        color: #9ca3af;
-        border-top-color: #1f2937;
-      }
-      .app-info-footer h2 {
-        font-size: 0.85rem;
-        color: #374151;
-        margin: 0 0 8px;
-      }
-      html.dark .app-info-footer h2 {
-        color: #d1d5db;
-      }
-      .app-info-footer p {
+      .app-info-strip-body p {
         margin: 0 0 10px;
       }
-      .app-info-footer ul {
+      .app-info-strip-body ul {
         margin: 0 0 10px;
         padding-left: 18px;
       }
-      .app-info-footer a {
-        color: #3B82F6;
+      .app-info-strip-body a {
+        color: inherit;
         text-decoration: underline;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-2nFN0TUU.js"></script>
+    <script type="module" crossorigin src="/assets/index-C-y7Vi2q.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
     <link rel="modulepreload" crossorigin href="/assets/preload-helper-zJ_50EbN.js">
     <link rel="modulepreload" crossorigin href="/assets/dist-BBuC9Xni.js">
     <link rel="modulepreload" crossorigin href="/assets/storageUtils-CKelRENY.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-lxpYLJEk.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-kFbx1P5V.css">
   </head>
   <body>
     <div id="root"></div>
 
-    <!-- Google ve kullanıcılar için: uygulamanın amacını açıklayan görünür footer -->
-    <footer class="app-info-footer">
-      <h2>Mesai Takip Uygulaması Hakkında</h2>
-      <p>
-        Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
-        Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
-        ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
-      </p>
-      <ul>
-        <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
-        <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
-        <li><strong>Bulut Yedekleme:</strong> Google Drive entegrasyonu ile verilerinizi cihazlar arasında güvenle senkronize etme.</li>
-        <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
-        <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
-      </ul>
-      <p>
-        <a href="/privacy.html">Gizlilik Politikası</a> |
-        <a href="/terms.html">Kullanım Şartları</a>
-        <br>
-        İletişim: kndmrefe@gmail.com
-      </p>
-    </footer>
+    <!-- Google ve kullanıcılar için: kapalı başlayan, tıklanınca açılan bilgi şeridi.
+         #root'un altında, normal akışta kaydırınca görünür. -->
+    <details class="app-info-strip">
+      <summary>Mesai Takip nedir?</summary>
+      <div class="app-info-strip-body">
+        <p>
+          Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
+          Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
+          ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
+        </p>
+        <ul>
+          <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
+          <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
+          <li><strong>Bulut Yedekleme:</strong> Google Drive entegrasyonu ile verilerinizi cihazlar arasında güvenle senkronize etme.</li>
+          <li><strong>Raporlama:</strong> Aylık çalışma performansınızı detaylı grafiklerle inceleme.</li>
+          <li><strong>Resmi Tatiller:</strong> Türkiye'deki dini ve resmi tatillerin otomatik takibi.</li>
+        </ul>
+        <p>
+          <a href="/privacy.html">Gizlilik Politikası</a> |
+          <a href="/terms.html">Kullanım Şartları</a>
+          <br>
+          İletişim: kndmrefe@gmail.com
+        </p>
+      </div>
+    </details>
 
   </body>
 </html>
