@@ -95,6 +95,11 @@
       .app-info-strip-body p {
         margin: 0 0 10px;
       }
+      .app-info-strip-title {
+        font-size: 1rem;
+        margin: 0 0 10px;
+        color: inherit;
+      }
       .app-info-strip-body ul {
         margin: 0 0 10px;
         padding-left: 18px;
@@ -132,8 +137,9 @@
     <!-- Google ve kullanıcılar için: her zaman görünür, açılır/kapanır bilgi şeridi.
          #root'un dışında ve ÜSTÜNDE; React'in layout'undan bağımsızdır. -->
     <details class="app-info-strip">
-      <summary>Mesai Takip nedir?</summary>
+      <summary>Mesai Takip</summary>
       <div class="app-info-strip-body">
+        <h1 class="app-info-strip-title">Mesai Takip</h1>
         <p>
           Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
           Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
