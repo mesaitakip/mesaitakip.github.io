@@ -63,92 +63,22 @@
       html.dark { background-color: #000000; }
       @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
 
-      /* Açılır/kapanır bilgi şeridi - position: relative ile normal akışta,
-         #root'tan ÖNCE gelir ve React'in height/overflow ayarlarından
-         etkilenmez çünkü kendi bağımsız bloğu, #root'un dışındadır. */
-      .app-info-strip {
-        position: relative;
-        z-index: 9999;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        font-size: 0.8rem;
-        background: #eff6ff;
-        border-bottom: 1px solid #dbeafe;
-        color: #1e3a8a;
-        flex-shrink: 0;
-      }
-      html.dark .app-info-strip {
-        background: #0f172a;
-        border-bottom-color: #1e293b;
-        color: #93c5fd;
-      }
-      .app-info-strip summary {
-        list-style: none;
-        cursor: pointer;
-        padding: 6px 16px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        -webkit-user-select: none;
-           -moz-user-select: none;
-                user-select: none;
-      }
-      .app-info-strip summary::-webkit-details-marker { display: none; }
-      .app-info-strip summary::before {
-        content: "▸";
-        display: inline-block;
-        transition: transform 0.15s ease;
-        font-size: 0.7rem;
-      }
-      .app-info-strip[open] summary::before {
-        transform: rotate(90deg);
-      }
-      .app-info-strip-body {
-        padding: 0 16px 14px;
-        max-width: 720px;
-        line-height: 1.5;
-        max-height: 60vh;
-        overflow-y: auto;
-      }
-      .app-info-strip-body p {
-        margin: 0 0 10px;
-      }
-      .app-info-strip-title {
-        font-size: 1rem;
-        margin: 0 0 10px;
-        color: inherit;
-      }
-      .app-info-strip-body ul {
-        margin: 0 0 10px;
-        padding-left: 18px;
-      }
-      .app-info-strip-body a {
-        color: inherit;
-        text-decoration: underline;
-      }
-
-      /* body'yi flex column yapıyoruz: şerit üstte sabit yer kaplar,
-         #root kalan alanı doldurur. Böylece React'in kendi iç
-         height:100vh ayarları bu şeridi asla ezemez/gizleyemez. */
-      html, body {
-        margin: 0;
-        height: 100%;
-      }
-      body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
-      #root {
-        flex: 1 1 auto;
-        min-height: 0;
+      /* Botlar için açıklama stili - Kullanıcıdan tamamen gizle ama DOM'da bırak */
+      .app-info-bot {
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
       }
     </style>
-    <script type="module" crossorigin src="/assets/index-C-y7Vi2q.js"></script>
+    <script type="module" crossorigin src="/assets/index-2nFN0TUU.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-BMWuMRn8.js">
     <link rel="modulepreload" crossorigin href="/assets/preload-helper-zJ_50EbN.js">
     <link rel="modulepreload" crossorigin href="/assets/dist-BBuC9Xni.js">
     <link rel="modulepreload" crossorigin href="/assets/storageUtils-CKelRENY.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-kFbx1P5V.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-lxpYLJEk.css">
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -156,17 +86,17 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Google ve kullanıcılar için: her zaman görünür, açılır/kapanır bilgi şeridi.
-         #root'un dışında ve ÜSTÜNDE; React'in layout'undan bağımsızdır. -->
-    <details class="app-info-strip">
-      <summary>Mesai Takip</summary>
-      <div class="app-info-strip-body">
-        <h1 class="app-info-strip-title">Mesai Takip</h1>
+    <div id="root">
+      <!-- Google Botları için Uygulama Açıklaması -->
+      <!-- Bu içerik React yüklendiğinde otomatik olarak temizlenecektir -->
+      <section class="app-info-bot">
+        <h1>Mesai Takip Uygulaması Hakkında</h1>
         <p>
           Mesai Takip, çalışanların iş hayatını kolaylaştırmak için tasarlanmış kapsamlı bir araçtır.
           Bu uygulama ile günlük çalışma saatlerinizi kaydedebilir, fazla mesailerinizi takip edebilir
           ve ay sonunda alacağınız toplam maaşı tüm kesintileriyle birlikte hesaplayabilirsiniz.
         </p>
+        <h2>Temel Özellikler:</h2>
         <ul>
           <li><strong>Hızlı Takip:</strong> Tek dokunuşla mesai giriş ve çıkış saatlerini kaydetme.</li>
           <li><strong>Otomatik Hesaplama:</strong> Fazla mesai ücretleri ve maaş verilerinin anlık hesaplanması.</li>
@@ -180,10 +110,8 @@
           <br>
           İletişim: kndmrefe@gmail.com
         </p>
-      </div>
-    </details>
-
-    <div id="root"></div>
+      </section>
+    </div>
 
   </body>
 </html>
