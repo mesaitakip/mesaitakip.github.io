@@ -1,0 +1,1 @@
+import{r,R as s,F as t,m}from"./index-BslH5i8x.js";import{i as o}from"./Input.css-CnJ8aveV.js";const f=r.forwardRef((a,e)=>s.createElement(t,{...a,ref:e,className:m(o,a.className),as:"textarea"}));export{f as T};
