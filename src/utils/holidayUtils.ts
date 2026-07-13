@@ -158,7 +158,7 @@ export function getOfficialHolidays(year: number): Holiday[] {
 // ─── Tüm tatilleri getir ───────────────────────────────────────────────────────
 // religiousHolidays: useDiniHolidays hook'undan gelir (dini.json).
 // officialHolidays: useResmiHolidays hook'undan gelir (resmi.json).
-// customHolidays: useCustomHolidays hook'undan gelir (Veri Yönetimi > Özel Günler'de
+// customHolidays: useCustomHolidays hook'undan gelir (Veri Yönetimi > Tatiller'de
 //                 kullanıcının manuel eklediği günler). Verilmezse boş kabul edilir.
 // Verilmezse ilgili FALLBACK listesi kullanılır (offline/ilk yükleme).
 //
@@ -169,7 +169,13 @@ const holidayCache = new Map<string, Holiday[]>();
 
 function fingerprintCustom(customHolidays: Holiday[]): string {
   if (customHolidays.length === 0) return 'none';
-  return `${customHolidays.length}:${customHolidays.map(h => h.date).sort().join(',')}`;
+  // Sadece tarihi değil; isim, tür, kısa ad, yarım gün ve tekrar bilgisini de
+  // parmak izine dahil ediyoruz. Aksi halde kullanıcı bir özel günü DÜZENLEYİP
+  // (tarih aynı kalsa bile) ismini değiştirdiğinde cache eski veriyi döndürmeye devam eder.
+  return customHolidays
+    .map(h => `${h.date}|${h.recurring ? 1 : 0}|${h.name}|${h.shortName}|${h.type}|${h.isHalfDay ? 1 : 0}`)
+    .sort()
+    .join(';');
 }
 
 export function getAllHolidays(
@@ -189,7 +195,18 @@ export function getAllHolidays(
 
   const official = officialHolidays.filter(h => h.date.startsWith(`${year}-`));
   const religious = religiousHolidays.filter(h => h.date.startsWith(`${year}-`));
-  const custom = customHolidays.filter(h => h.date.startsWith(`${year}-`));
+
+  // Özel günler: "Her yıl tekrarla" işaretliyse, kaydedilen ay/gün'ü o yıla uyarlayıp
+  // her yıl için yeniden üretiyoruz. İşaretli değilse yalnızca eklendiği yılda geçerlidir.
+  const custom: Holiday[] = [];
+  for (const h of customHolidays) {
+    if (h.recurring) {
+      const [, month, day] = h.date.split('-');
+      custom.push({ ...h, date: `${year}-${month}-${day}` });
+    } else if (h.date.startsWith(`${year}-`)) {
+      custom.push(h);
+    }
+  }
 
   // Çakışma çözümü: aynı tarihte birden fazla tatil varsa
   // tam gün > yarım gün, resmi > dini önceliği
@@ -213,7 +230,7 @@ export function getAllHolidays(
     }
   }
 
-  // Kullanıcının Veri Yönetimi > Özel Günler'den manuel eklediği günler
+  // Kullanıcının Veri Yönetimi > Tatiller'den manuel eklediği günler
   // her zaman önceliklidir; aynı tarihte online/fallback veri varsa
   // kullanıcının girdisiyle değiştirilir.
   for (const h of custom) {
@@ -250,4 +267,42 @@ export function getHolidayColorClass(holiday: Holiday): string {
     return 'bg-green-100 text-green-700 border border-green-200 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800/50';
   }
   return 'bg-red-100 text-red-700 border border-red-200 dark:bg-red-900/40 dark:text-red-300 dark:border-red-800/50';
+}
+
+// ─── Yaklaşan tatiller ────────────────────────────────────────────────────────
+// Ana ekrandaki "İzin & Tatil" özet panelinde kullanılır: verilen tarihten
+// (varsayılan: bugün) itibaren en yakın N tatili, kalan gün sayısıyla birlikte
+// döndürür. `allHolidays` genelde useHolidays'ten loadAdjacentYears=true ile
+// gelen (önceki+mevcut+sonraki yıl) listedir, böylece yıl sonunda/başında da
+// bir sonraki yılın tatilleri kaçırılmaz.
+//
+// `dayOfWeek` (0=Pazar...6=Cumartesi) kasıtlı olarak burada, "iş günü mü
+// değil mi" hesabı YAPILMADAN bırakılıyor — çünkü bu, kullanıcının Cumartesi
+// çalışma ayarına (otomatik/manuel) bağlı ve o bilgi settings üzerinden
+// yalnızca çağıran tarafta (useMonthlyStatsLogic) mevcut. Bu fonksiyon
+// settings'e bağımlı olmasın diye ham `dayOfWeek`'i döndürüp workday
+// kararını çağırana bırakıyoruz.
+export interface UpcomingHoliday extends Holiday {
+  daysUntil: number;
+  dayOfWeek: number;
+}
+
+export function getUpcomingHolidays(
+  allHolidays: Holiday[],
+  fromDate: Date = new Date(),
+  limit: number = 5
+): UpcomingHoliday[] {
+  const startOfDay = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+  return allHolidays
+    .map((h): UpcomingHoliday => {
+      const [y, m, d] = h.date.split('-').map(Number);
+      const holidayDate = new Date(y, m - 1, d);
+      const daysUntil = Math.round((holidayDate.getTime() - startOfDay.getTime()) / MS_PER_DAY);
+      return { ...h, daysUntil, dayOfWeek: holidayDate.getDay() };
+    })
+    .filter(h => h.daysUntil >= 0)
+    .sort((a, b) => a.daysUntil - b.daysUntil)
+    .slice(0, limit);
 }

@@ -11,7 +11,6 @@
     { "date": "2025-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2025-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
     { "date": "2025-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
-
     { "date": "2026-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2026-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2026-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -21,7 +20,6 @@
     { "date": "2026-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2026-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
     { "date": "2026-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
-
     { "date": "2027-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2027-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2027-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -30,8 +28,7 @@
     { "date": "2027-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2027-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2027-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2027-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2027-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2028-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2028-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2028-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -40,8 +37,7 @@
     { "date": "2028-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2028-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2028-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2028-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2028-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2029-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2029-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2029-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -50,8 +46,7 @@
     { "date": "2029-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2029-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2029-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2029-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2029-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2030-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2030-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2030-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -60,8 +55,7 @@
     { "date": "2030-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2030-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2030-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2030-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2030-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2031-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2031-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2031-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -70,8 +64,7 @@
     { "date": "2031-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2031-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2031-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2031-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2031-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2032-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2032-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2032-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -80,8 +73,7 @@
     { "date": "2032-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2032-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2032-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2032-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2032-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2033-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2033-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2033-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -90,8 +82,7 @@
     { "date": "2033-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2033-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2033-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2033-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2033-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2034-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2034-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2034-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -100,8 +91,7 @@
     { "date": "2034-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2034-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2034-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2034-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2034-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2035-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2035-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2035-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -110,8 +100,7 @@
     { "date": "2035-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2035-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2035-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2035-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2035-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2036-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2036-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2036-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -120,8 +109,7 @@
     { "date": "2036-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2036-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2036-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2036-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2036-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2037-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2037-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2037-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -130,8 +118,7 @@
     { "date": "2037-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2037-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2037-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2037-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2037-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2038-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2038-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2038-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -140,8 +127,7 @@
     { "date": "2038-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2038-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2038-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2038-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2038-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2039-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2039-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2039-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },
@@ -150,8 +136,7 @@
     { "date": "2039-07-15", "name": "15 Temmuz Demokrasi ve Milli Birlik Günü", "type": "official", "shortName": "15 Temmuz" },
     { "date": "2039-08-30", "name": "30 Ağustos Zafer Bayramı", "type": "official", "shortName": "30 Ağustos" },
     { "date": "2039-10-28", "name": "Cumhuriyet Bayramı Arifesi", "type": "official", "shortName": "28 Eki", "isHalfDay": true },
-    { "date": "2039-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" }
-
+    { "date": "2039-10-29", "name": "29 Ekim Cumhuriyet Bayramı", "type": "official", "shortName": "29 Ekim" },
     { "date": "2040-01-01", "name": "Yılbaşı", "type": "official", "shortName": "Yılbaşı" },
     { "date": "2040-03-21", "name": "Nevruz Bayramı", "type": "official", "shortName": "Nevruz" },
     { "date": "2040-04-23", "name": "23 Nisan Ulusal Egemenlik ve Çocuk Bayramı", "type": "official", "shortName": "23 Nisan" },

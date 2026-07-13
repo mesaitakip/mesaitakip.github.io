@@ -8,8 +8,8 @@
  */
 
 import { Capacitor } from '@capacitor/core';
-import { Filesystem, Encoding } from '@capacitor/filesystem';
 import { FilePicker } from '@capawesome/capacitor-file-picker';
+import { SafBackup } from './safBackupPlugin';
 import { storage } from './storageUtils';
 
 const IS_NATIVE = Capacitor.isNativePlatform();
@@ -77,9 +77,6 @@ async function getWebDirHandle(): Promise<any | null> {
 }
 
 // ─── Ortak yardımcılar ──────────────────────────────────────────────────────
-function joinPath(dir: string, file: string): string {
-  return `${dir.replace(/\/+$/, '')}/${file}`;
-}
 
 function generateBackupFilename(): string {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 16);
@@ -109,6 +106,14 @@ export async function pickBackupFolder(): Promise<{ success: boolean; message: s
       const decodedPath = decodeURIComponent(result.path);
       const segments = decodedPath.split(/[/:]+/).filter(Boolean);
       const folderName = segments[segments.length - 1] || decodedPath;
+
+      // SAF izninin uygulama yeniden başlatıldığında/telefon rebootunda
+      // kaybolmamasını garanti altına al.
+      try {
+        await SafBackup.persistPermission({ treeUri: result.path });
+      } catch {
+        // FilePicker zaten kalıcı izin veriyor olabilir; kritik değil.
+      }
 
       await storage.set(FOLDER_PATH_KEY, result.path);
       await storage.set(FOLDER_NAME_KEY, folderName);
@@ -162,10 +167,16 @@ export async function backupNowToFolder(jsonData: string): Promise<{ success: bo
       return { success: false, message: 'Önce bir yedekleme klasörü seçmelisiniz.' };
     }
     try {
-      await Filesystem.writeFile({
-        path: joinPath(folderPath, filename),
+      // ÖNEMLİ: @capacitor/filesystem'in writeFile'ı content:// SAF tree
+      // URI'lerine YAZAMAZ (Capacitor'ın kendi dokümantasyonu bile content://
+      // URI'leri sadece OKUMA için desteklediğini söylüyor). Bu yüzden burada
+      // DocumentFile tabanlı native SafBackup eklentisini kullanıyoruz —
+      // gerçek SAF alt-belge oluşturma işlemini bu yapıyor.
+      await SafBackup.writeFile({
+        treeUri: folderPath,
+        fileName: filename,
         data: jsonData,
-        encoding: Encoding.UTF8,
+        mimeType: 'application/json',
       });
       return { success: true, message: 'Seçtiğiniz klasöre yedeklendi.' };
     } catch (e) {
@@ -204,10 +215,10 @@ export async function listFolderBackups(): Promise<FolderBackupFile[]> {
     const folderPath = await storage.get(FOLDER_PATH_KEY);
     if (!folderPath) return [];
     try {
-      const { files } = await Filesystem.readdir({ path: folderPath });
+      const { files } = await SafBackup.listFiles({ treeUri: folderPath });
       return files
-        .filter(f => f.type === 'file' && f.name.startsWith('backup_') && f.name.endsWith('.json'))
-        .map(f => ({ name: f.name, date: new Date(f.mtime) }))
+        .filter(f => f.name.startsWith('backup_') && f.name.endsWith('.json'))
+        .map(f => ({ name: f.name, date: new Date(f.lastModified) }))
         .sort((a, b) => b.date.getTime() - a.date.getTime());
     } catch (e) {
       console.error('Klasör listeleme hatası:', e);
@@ -239,8 +250,8 @@ export async function readFolderBackup(name: string): Promise<string | null> {
     const folderPath = await storage.get(FOLDER_PATH_KEY);
     if (!folderPath) return null;
     try {
-      const result = await Filesystem.readFile({ path: joinPath(folderPath, name), encoding: Encoding.UTF8 });
-      return result.data as string;
+      const result = await SafBackup.readFile({ treeUri: folderPath, fileName: name });
+      return result.data;
     } catch (e) {
       console.error('Klasörden okuma hatası:', e);
       return null;
@@ -266,8 +277,8 @@ export async function deleteFolderBackup(name: string): Promise<boolean> {
     const folderPath = await storage.get(FOLDER_PATH_KEY);
     if (!folderPath) return false;
     try {
-      await Filesystem.deleteFile({ path: joinPath(folderPath, name) });
-      return true;
+      const result = await SafBackup.deleteFile({ treeUri: folderPath, fileName: name });
+      return result.success;
     } catch (e) {
       console.error('Klasörden silme hatası:', e);
       return false;

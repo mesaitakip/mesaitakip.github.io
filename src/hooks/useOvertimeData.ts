@@ -1,9 +1,11 @@
 import React, { useSyncExternalStore } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { OvertimeEntry, MonthlyData, calcTotalHours } from '../types/overtime';
 import { getMonthKey, getDateKey, calculateEffectiveHours, parseDate } from '../utils/dateUtils';
 import { useSalarySettings } from './useSalarySettings';
 import { useHolidays } from './useHolidays';
 import { storage } from '../utils/storageUtils';
+import { WidgetUpdate } from '../utils/widgetUpdate';
 
 import { EventEmitter } from '../utils/EventEmitter';
 
@@ -75,6 +77,105 @@ const validateAndCleanData = (data: any): MonthlyData => {
   return cleanData;
 };
 
+// Native "Hızlı Mesai Ekle" widget'ı (bkz. android/.../QuickOvertimeActivity.kt),
+// uygulamayı hiç açmadan, WebView'a hiç dokunmadan kendi native ekranında
+// çalışıyor — asıl "WhatsApp gibi anlık" hissin kaynağı bu (JS/React/CSS
+// boot maliyeti sıfır). Ama tam o yüzden, ana uygulamanın kendi
+// state'ini/depolama mantığını BİLMİYOR: doğrudan `mesai-data-{ay}` anahtarına
+// yazmak, eğer uygulama O SIRADA zaten açıksa ve bellekteki (globalData) eski
+// haliyle bir saveGlobalData() tetiklerse, native'in az önce eklediği kaydın
+// SESSİZCE ÜZERİNE YAZILIP KAYBOLMASINA yol açabilirdi (klasik "eski state
+// üzerine yazma" yarış durumu — tam olarak "uygulamanın çalışmasına engel
+// olmasın" isteğinin ihlali).
+//
+// Bunun yerine native taraf, kaydı AYRI ve SADECE KENDİSİNİN yazdığı bir
+// "bekleme kuyruğu" anahtarına (`quick-widget-pending`) ekliyor. JS tarafı
+// (burada, veri zaten yüklendikten SONRA, globalData'nın güncel/gerçek
+// halinin üzerine) bu kuyruğu okuyup normal addOvertimeEntry mantığıyla
+// birebir aynı şekilde (tarih+tür bazlı, var olanı değiştir/yoksa ekle)
+// entegre ediyor, sonra kuyruğu temizliyor. Böylece native yazma ile JS'in
+// kendi state'i arasında hiçbir çakışma/veri kaybı riski kalmıyor.
+export const processPendingWidgetEntries = async () => {
+  let pending: any;
+
+  // 1. AŞAMA: Kuyruğu oku ve ayrıştır. Bu aşamada hata olursa (JSON gerçekten
+  // bozuksa) kurtarma imkanı yoktur, güvenle silinir — aksi halde her açılışta
+  // aynı hatayla sonsuz döngüye girer.
+  try {
+    const pendingRaw = await storage.get('quick-widget-pending');
+    if (!pendingRaw) return;
+    pending = JSON.parse(pendingRaw);
+  } catch (parseError) {
+    console.error('Widget bekleme kuyruğu okunamadı/bozuk, temizleniyor:', parseError);
+    await storage.remove('quick-widget-pending').catch(() => {});
+    return;
+  }
+
+  if (!Array.isArray(pending) || pending.length === 0) {
+    await storage.remove('quick-widget-pending').catch(() => {});
+    return;
+  }
+
+  // 2. AŞAMA: Veriyi birleştirip kaydet. Burada bir hata olursa (örn. disk
+  // dolu, storage plugin hatası) kuyruğu SİLMİYORUZ — veri kaybı olmasın
+  // diye bir sonraki uygulama açılışında tekrar denenecek. Tarih+tür bazlı
+  // birleştirme mantığı idempotent olduğu için (aynı kayıt tekrar işlense
+  // bile aynı sonucu verir), tekrar deneme güvenlidir.
+  try {
+    const affectedMonthKeys = new Set<string>();
+
+    for (const raw of pending) {
+      if (!raw || typeof raw.date !== 'string') continue;
+      const hours = typeof raw.hours === 'number' ? raw.hours : 0;
+      const minutes = typeof raw.minutes === 'number' ? raw.minutes : 0;
+      const monthKey = raw.date.slice(0, 7); // "YYYY-MM-DD" -> "YYYY-MM"
+      const currentMonthData = globalData[monthKey] ? [...globalData[monthKey]] : [];
+
+      // Widget'ta saat/dakikayı 0/0'a getirip "Ekle"ye basmak, artık o günün
+      // mesai kaydını SİLMEK için kullanılıyor (kullanıcının "günü sıfırlama"
+      // isteği). `delete` bayrağı native taraftan geliyor; yoksa da hours ve
+      // minutes'ın ikisi de 0 ise aynı şekilde davranıyoruz (geriye dönük
+      // uyumluluk için).
+      const isDeleteRequest = raw.delete === true || (hours === 0 && minutes === 0);
+      if (isDeleteRequest) {
+        const filtered = currentMonthData.filter(entry => !(entry.date === raw.date && entry.type === 'overtime'));
+        if (filtered.length !== currentMonthData.length) {
+          globalData = { ...globalData, [monthKey]: filtered };
+          affectedMonthKeys.add(monthKey);
+        }
+        continue;
+      }
+
+      const newEntry: OvertimeEntry = {
+        id: `widget-${raw.date}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        date: raw.date,
+        hours,
+        minutes,
+        type: 'overtime',
+        isFullDay: false,
+        isPaid: false,
+        deductFromOvertime: false,
+      };
+
+      const existingIndex = currentMonthData.findIndex(entry => entry.date === newEntry.date && entry.type === newEntry.type);
+      if (existingIndex >= 0) currentMonthData[existingIndex] = newEntry;
+      else currentMonthData.push(newEntry);
+      currentMonthData.sort((a, b) => a.date.localeCompare(b.date));
+
+      globalData = { ...globalData, [monthKey]: currentMonthData };
+      affectedMonthKeys.add(monthKey);
+    }
+
+    for (const monthKey of affectedMonthKeys) {
+      await saveGlobalData(monthKey);
+    }
+    await storage.remove('quick-widget-pending');
+  } catch (error) {
+    console.error('Widget bekleme kuyruğu işlenirken hata oluştu, bir sonraki açılışta tekrar denenecek:', error);
+    // Kuyruğu BİLEREK silmiyoruz — veri kaybını önlemek için.
+  }
+};
+
 const loadGlobalData = async () => {
   if (isDataLoaded) return;
   if (loadingPromise) return loadingPromise;
@@ -120,6 +221,9 @@ const loadGlobalData = async () => {
 
         globalData = validateAndCleanData(globalData);
       }
+
+      await processPendingWidgetEntries();
+
       isDataLoaded = true;
       dataEmitter.emit();
     } catch (error) {
@@ -168,6 +272,15 @@ const saveGlobalData = async (specificMonthKey?: string) => {
       }
     }
     dataEmitter.emit();
+
+    // Uygulama İÇİNDEN bir kayıt eklenip/değiştirilip/silindiğinde "Mesai
+    // Ekle" widget'ının "Bu Ay" özetini (native tarafta, bkz.
+    // MonthlyStatsCalculator.kt) hemen tazelemesi için sinyal gönder —
+    // aksi halde widget bir sonraki periyodik sistem güncellemesine kadar
+    // eski rakamları göstermeye devam ederdi.
+    if (Capacitor.getPlatform() === 'android') {
+      WidgetUpdate.refresh().catch(() => {});
+    }
   } catch (error) {
     console.error('Kaydetme hatası:', error);
   }

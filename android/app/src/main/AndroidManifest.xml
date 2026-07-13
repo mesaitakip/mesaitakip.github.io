@@ -17,6 +17,10 @@
             android:launchMode="singleTask"
             android:exported="true">
 
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -38,6 +42,20 @@
 
         </activity>
 
+        <!--
+          Ana ekran kısayolundan ("Hızlı Mesai Ekle") açılan, WebView/React'e
+          hiç dokunmayan, tamamen native anlık mesai giriş penceresi.
+          Widget'ın Activity açmayan kendine özgü davranışından FARKLI olarak
+          bu, kısayol/launcher üzerinden geldiği için gerçek bir Activity
+          olmak zorunda — ama tam MainActivity yerine bu minik/floating
+          pencereyi kullanarak WebView açılışını bekletmiyoruz.
+        -->
+        <activity
+            android:name=".widget.QuickOvertimeActivity"
+            android:theme="@style/QuickOvertimeDialogTheme"
+            android:excludeFromRecents="true"
+            android:exported="true" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -47,9 +65,58 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+
+        <receiver
+            android:name=".widget.MesaiWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mesai_widget_info" />
+        </receiver>
+
+        <!-- Maaş günü hatırlatıcısı: AlarmManager tarafından belirlenen
+             gün/saatte tetiklenir, bildirimi gösterir ve bir sonraki ayın
+             alarmını kendisi yeniden kurar. -->
+        <receiver
+            android:name=".reminders.SalaryReminderReceiver"
+            android:exported="false" />
+
+        <!-- Mesai/vardiya bitiş hatırlatıcısı: her tetiklenişte o günün
+             doğru vardiya bitiş saatini hesaplayıp bir sonraki uygun günü
+             kendisi kurar (bkz. WorkEndReminderScheduler.kt). -->
+        <receiver
+            android:name=".reminders.WorkEndReminderReceiver"
+            android:exported="false" />
+
+        <!-- Cihaz yeniden başladığında (exact alarm'lar reboot'ta
+             sıfırlandığı için) hatırlatıcı hâlâ açıksa alarmı yeniden kurar. -->
+        <receiver
+            android:name=".reminders.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <!-- Permissions -->
-
+    <!-- For Android 13 (API 33) and higher (Granular media permissions) -->
+    <!-- Widget'taki "Ekle" işleminden sonra kısa bilgilendirme göstermek için
+         (Toast yerine, arka planda daha güvenilir çalışsın diye bildirim kullanılıyor) -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Maaş günü hatırlatıcısı: belirlenen gün/saatte tam zamanlı alarm
+         kurabilmek için (Android 12+). Cihaz yeniden başladığında alarmı
+         geri kurabilmek için de RECEIVE_BOOT_COMPLETED gerekiyor. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 </manifest>

@@ -1,7 +1,12 @@
 import React, { useSyncExternalStore } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { SalarySettings, MonthlySalary } from '../types/overtime';
 import { getMonthKey, getNormalizedShiftStartDate, isSaturdayWorkday, getDateKey } from '../utils/dateUtils';
 import { storage } from '../utils/storageUtils';
+import { WidgetUpdate } from '../utils/widgetUpdate';
+import { syncSalaryReminder } from '../utils/salaryReminder';
+import { syncWorkEndReminder } from '../utils/workEndReminder';
+import { syncNativeBackupScheduler } from '../utils/nativeBackupScheduler';
 
 import { EventEmitter } from '../utils/EventEmitter';
 
@@ -32,6 +37,13 @@ const defaultSettings: SalarySettings = {
   autoBackupEnabled: false,
   autoBackupPeriod: 'weekly',
   lastBackupDate: '',
+  salaryReminderEnabled: false,
+  salaryReminderDay: 1,
+  salaryReminderTime: '09:00',
+  workEndReminderEnabled: false,
+  workEndReminderMinutesBefore: 5,
+  shiftStartTimes: {},
+  shiftIncludesSunday: false,
   dailyMealAllowance: 0,
   dailyTravelAllowance: 0,
   departureTravelAllowance: 0,
@@ -43,6 +55,14 @@ const defaultSettings: SalarySettings = {
   severanceStampTaxRate: 0.759,
   severanceBaseGross: 33030.00,
   showSeverancePay: false,
+  usedAnnualLeaveDays: 0,
+  noticePayCumulativeBase: 0,
+  minimumWageGross: 33030,
+  taxBracket1Limit: 190000, taxBracket1Rate: 15,
+  taxBracket2Limit: 400000, taxBracket2Rate: 20,
+  taxBracket3Limit: 1500000, taxBracket3Rate: 27,
+  taxBracket4Limit: 5300000, taxBracket4Rate: 35,
+  taxBracket5Rate: 40,
   shiftHistory: []
 };
 
@@ -121,12 +141,26 @@ const loadGlobalSettings = async () => {
   }
   isSalaryLoaded = true;
   salaryEmitter.emit();
+  syncSalaryReminder(globalSettings).catch(() => {});
+  syncWorkEndReminder(globalSettings).catch(() => {});
+  syncNativeBackupScheduler(globalSettings).catch(() => {});
 };
 
 const saveGlobalSettings = async () => {
   try {
     await storage.set('mesai-salary-settings', JSON.stringify(globalSettings));
     salaryEmitter.emit();
+
+    // Maaş ayarları (mesai çarpanları, TES, icra kesintisi vb.) widget'ın
+    // "Bu Ay" özetini (native, bkz. MonthlyStatsCalculator.kt) de
+    // etkiliyor — değişince widget'ı hemen tazele.
+    if (Capacitor.getPlatform() === 'android') {
+      WidgetUpdate.refresh().catch(() => {});
+    }
+
+    syncSalaryReminder(globalSettings).catch(() => {});
+    syncWorkEndReminder(globalSettings).catch(() => {});
+    syncNativeBackupScheduler(globalSettings).catch(() => {});
   } catch (error) {
     console.error('Maaş ayarları kaydetme hatası:', error);
   }
@@ -238,7 +272,7 @@ export const useSalarySettings = () => {
     if (nextSettings.shiftSystemType !== currentSettings.shiftSystemType) {
       if (nextSettings.shiftSystemType === '3-shift') {
         nextSettings.defaultStartTime = '08:05';
-        nextSettings.defaultEndTime = '16:05';
+        nextSettings.defaultEndTime = '16:35';
       } else {
         nextSettings.defaultStartTime = '08:05';
         nextSettings.defaultEndTime = '18:05';

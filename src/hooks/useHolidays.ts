@@ -23,7 +23,7 @@ export const useHolidays = (initialYear?: number, loadAdjacentYears = false) => 
   const { holidays: religiousHolidays } = useDiniHolidays();
   // Resmi tatilleri online kaynaktan çek (fallback hardcoded veriler)
   const { holidays: officialHolidays } = useResmiHolidays();
-  // Kullanıcının Veri Yönetimi > Özel Günler'den manuel eklediği günler
+  // Kullanıcının Veri Yönetimi > Tatiller'den manuel eklediği günler
   const { holidays: customHolidays } = useCustomHolidays();
 
   // Function to update the year (only works if initialYear is not provided)
