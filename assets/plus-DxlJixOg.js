@@ -1,1 +1,0 @@
-import{r as s,R as t,F as r,m as c,c as o}from"./index-D9hr00Jo.js";import{i as m}from"./Input-CDpA-mu8.js";const n=s.forwardRef((a,e)=>t.createElement(r,{...a,ref:e,className:c(m,a.className),as:"textarea"}));const i=o("Plus",[["path",{d:"M5 12h14",key:"1ays0h"}],["path",{d:"M12 5v14",key:"s699le"}]]);export{i as P,n as T};
