@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "updated": "2026-07-25",
+  "minimumWageGross": 33030,
+  "severanceCeiling": 64948.77,
+  "taxBrackets": [
+    { "limit": 190000, "rate": 15 },
+    { "limit": 400000, "rate": 20 },
+    { "limit": 1500000, "rate": 27 },
+    { "limit": 5300000, "rate": 35 },
+    { "rate": 40 }
+  ]
+}
