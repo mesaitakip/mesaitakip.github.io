@@ -52,6 +52,22 @@
 
 \---
 
+## İşçinin Mola Hakkı Süresi Nasıl Belirlenir?
+
+4857 sayılı İş Kanunu ara dinlenme süreleri, iş yerinde belirlenen günlük çalışma sürelerine göre değişiklik gösterir. Kanunda belirtilen çalışma sürelerine göre mola süreleri şöyledir:
+
+| İş Süresi | Asgari Dinlenme Süresi |
+| --- | --- |
+| 4 saat veya daha kısa süreli işlerde | 15 dakika |
+| 4 saatten fazla ve 7,5 saate kadar (7,5 saat dâhil) süreli işlerde | 30 dakika |
+| 7,5 saatten fazla süreli işlerde | 60 dakika |
+
+Yargıtay 9. Hukuk Dairesi'nin güncel bir kararına göre 12 saat süren çalışmalarda (örneğin 08.00-20.00 arası) ara dinlenme süresi en az 1,5 saat, 13 ve 14 saat süren çalışmalarda (örneğin 08.00-21.00 ve 08.00-22.00 arası) ise en az 2 saat olarak kabul edilmelidir.[^1]
+
+[^1]: Yargıtay 9. Hukuk Dairesi, E. 2026/552, K. 2026/1099, T. 11.02.2026
+
+\---
+
 ## İpuçları
 
 * Resmi tatil günlerinde çalışıldığında **günlük ücretin 2 katı** ödenir
