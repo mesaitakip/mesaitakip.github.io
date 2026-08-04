@@ -22,3 +22,19 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(fetch(event.request));
 });
+
+// Mesai Bitiş Hatırlatıcısı (web) bildirimine tıklanınca, açık bir sekme
+// varsa onu öne getir; yoksa yeni bir sekmede uygulamayı aç. Bildirimin
+// kendisi webWorkEndReminder.ts içinde registration.showNotification() ile
+// gösteriliyor — bu sadece tıklama davranışını yönetiyor.
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if ('focus' in client) return client.focus();
+      }
+      if (self.clients.openWindow) return self.clients.openWindow('/');
+    })
+  );
+});
