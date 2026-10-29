@@ -1,1 +1,0 @@
-import{r as s,R as t,F as e,G as c}from"./index-BKa7J-h9.js";var o="r95_taf7or0 r95_22fi81";const n=s.forwardRef((a,r)=>t.createElement(e,{...a,ref:r,className:c(o,a.className),as:"input"}));export{n as I,o as i};
