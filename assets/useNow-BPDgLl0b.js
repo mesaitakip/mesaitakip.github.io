@@ -1,1 +1,0 @@
-import{r as e}from"./index-B_UADFOF.js";function a(t=6e4){const[o,r]=e.useState(()=>Date.now());return e.useEffect(()=>{const n=setInterval(()=>r(Date.now()),t);return()=>clearInterval(n)},[t]),o}export{a as u};
