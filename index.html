@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="tr">
   <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-MmmmxngdVgKMoYZ9cEA8IoANsfXkvFTdi3N/lz32AmQ=' 'sha256-zUYElOuUfW2D5fdV+zOzKB7K5bnj4Dnsg9+P8W2Oe08=' 'sha256-Ls1Z2s9glgRIAauEzgN4ajP/jG3AwhB0L31/gTUC2m8=' 'sha256-Lc6fNBG0suoLZzgJWE1HMAMs/95kaQNyE9bbVqGBXPY=' https://www.googletagmanager.com; style-src 'self' 'sha256-tQ/S2hyFo140725gEVUPNeL0HKljLFykE03TkfDdtQI='; img-src 'self' data: blob: https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net; font-src 'self' data:; connect-src 'self' https://www.googleapis.com https://oauth2.googleapis.com https://mesaitakip.github.io https://api.github.com https://mesaitakip-oauth.kndmrefe.workers.dev https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://stats.g.doubleclick.net ipc: http://ipc.localhost; frame-src 'self' https://www.googletagmanager.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+
+    <!-- Clickjacking koruması: sayfa başka bir sitenin iframe'i içinde açılırsa gizle ve üst pencereyi bu sayfaya götür.
+         (GitHub Pages HTTP başlığı eklemeye izin vermediği için frame-ancestors/X-Frame-Options kullanılamıyor.) -->
+    <script>
+      if (window.top !== window.self) {
+        document.documentElement.style.display = 'none';
+        try { window.top.location = window.self.location; } catch (e) {}
+      }
+    </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -18,7 +30,6 @@
       gtag('config', 'G-FDDVWMXF4F');
     </script>
 
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon-192.png" />
@@ -59,24 +70,14 @@
       })();
     </script>
 
-    <style>
-      :root { --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px); }
-      html { background-color: #f3f4f6; }
-      html.dark { background-color: #000000; }
-      @supports (-webkit-touch-callout: none) { .ios-fix { height: -webkit-fill-available; } }
-
-      /* Botlar için açıklama stili - Kullanıcıdan tamamen gizle ama DOM'da bırak */
-      .app-info-bot {
-        position: absolute;
-        left: -10000px;
-        top: auto;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-      }
-    </style>
-    <script type="module" crossorigin src="/assets/index-D6TyhG6d.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DtOlj61j.css">
+    <style>@layer theme,base,react95,components;:root{--safe-area-inset-bottom:env(safe-area-inset-bottom,0px)}html{background-color:#f3f4f6}html.dark{background-color:#000}@supports (-webkit-touch-callout:none){.ios-fix{height:-webkit-fill-available}}.app-info-bot{width:1px;height:1px;position:absolute;top:auto;left:-10000px;overflow:hidden}</style>
+    <script type="module" crossorigin src="/assets/index-5_GYURC9.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/createLucideIcon-DT1w0RYI.js">
+    <link rel="modulepreload" crossorigin href="/assets/dist-Df2lF_67.js">
+    <link rel="modulepreload" crossorigin href="/assets/androidUtils-mELKEHRP.js">
+    <link rel="modulepreload" crossorigin href="/assets/storageUtils-BdNm2ExJ.js">
+    <link rel="stylesheet" crossorigin href="/assets/createLucideIcon-DBbPv9gt.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-8-Y79Nhs.css">
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->

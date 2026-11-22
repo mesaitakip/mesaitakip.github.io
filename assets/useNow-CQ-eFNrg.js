@@ -1,0 +1,1 @@
+import{d as e,l as t}from"./createLucideIcon-DT1w0RYI.js";var n=e(t(),1);function r(e=6e4){let[t,r]=(0,n.useState)(()=>Date.now());return(0,n.useEffect)(()=>{let t=setInterval(()=>r(Date.now()),e);return()=>clearInterval(t)},[e]),t}export{r as t};

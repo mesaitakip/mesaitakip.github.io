@@ -1,0 +1,1 @@
+import{c as e,d as t,l as n,o as r,r as i}from"./createLucideIcon-DT1w0RYI.js";var a=t(n(),1),o=e(),s=`r95_taf7or0 r95_22fi81`,c=t(r(),1),l=(0,a.forwardRef)((e,t)=>(0,o.jsx)(i,{...e,ref:t,className:(0,c.default)(s,e.className),as:`input`}));export{s as n,l as t};
